@@ -3,7 +3,7 @@ FROM gradle:latest AS gradle
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 
-RUN addgroup -g ${GROUP_ID} gradle \
+RUN addgroup --gid ${GROUP_ID} gradle \
  && adduser --gid ${GROUP_ID} -s /bin/bash -h /home/gradle gradle
 
 COPY --chown=glade:glade . /home/gradle/src
