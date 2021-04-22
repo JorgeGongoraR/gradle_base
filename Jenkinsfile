@@ -23,21 +23,51 @@
 //     }
     
 // }
-environment{
-    registry = "jorgegongora/dockergradle"
-    resistryCredential = 'dockerhub'
-}
-stages{
-    stage('Clone repository'){
-        steps{
-            echo '=============== Cloning repository ==============='
-            checkout scm
-        }
+// environment{
+//     registry = "jorgegongora/dockergradle"
+//     resistryCredential = 'dockerhub'
+// }
+// stages{
+//     stage('Clone repository'){
+//         steps{
+//             echo '=============== Cloning repository ==============='
+//             checkout scm
+//         }
+//     }
+//     stage('Build image'){
+//         steps{
+//             echo '================= Building image ================='
+//             docker.build registry + ":$BUILD_ID"
+//         }
+//     }
+// }
+pipeline{
+    environment{
+        registry = "jorgegongora/dockergradle"
+        resistryCredential = 'dockerhub'
     }
-    stage('Build image'){
-        steps{
-            echo '================= Building image ================='
-            docker.build registry + ":$BUILD_ID"
+    agent any
+
+    stages{
+        stage('Clone repository'){
+            steps{
+                echo '=============== Cloning repository ==============='
+                checkout scm
+            }
+        }
+        stage('Build image'){
+            steps{
+                echo '================= Building image ================='
+                dockerImage = docker.build registry + ":$BUILD_ID"
+            }
+        }
+        stage('Deploy image'){
+            steps{
+                echo '================= Deplying image ================='
+                docker.withRegistry('', resistryCredential) {
+                dockerImage.push()
+                }
+            }
         }
     }
 }
