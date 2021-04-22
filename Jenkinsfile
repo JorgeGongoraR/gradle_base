@@ -1,25 +1,43 @@
-pipeline {
-    agent any
-    // environment {
-    //     registry = "jorgegongora/dockergradle"
-    //     registryCredential = 'dockerhub'
-    // }
-    stages {
-        stage('Clone repository'){
+// pipeline {
+//     agent any
+//     // environment {
+//     //     registry = "jorgegongora/dockergradle"
+//     //     registryCredential = 'dockerhub'
+//     // }
+//     stages {
+//         stage('Clone repository'){
+//             echo '=============== Cloning repository ==============='
+//             checkout scm
+//         }
+//         stage('Build image') {
+//             echo '================= Building image ================='
+//             customImage = docker.build("dockergradle:${env.BUILD_ID}")
+//         }
+//         stage('Push image to docker hub'){
+//             echo '========== Pushing image to docker hub ==========='
+//             docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+//             customImage = docker.build("dockergradle:${env.BUILD_ID}")
+//             customImage.push()
+//             }
+//         }
+//     }
+    
+// }
+environment{
+    registry = "jorgegongora/dockergradle"
+    resistryCredential = ´dockerhub´
+}
+stages{
+    stage('Clone repository'){
+        steps{
             echo '=============== Cloning repository ==============='
             checkout scm
         }
-        stage('Build image') {
+    }
+    stage('Build image'){
+        steps{
             echo '================= Building image ================='
-            customImage = docker.build("dockergradle:${env.BUILD_ID}")
-        }
-        stage('Push image to docker hub'){
-            echo '========== Pushing image to docker hub ==========='
-            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            customImage = docker.build("dockergradle:${env.BUILD_ID}")
-            customImage.push()
-            }
+            docker.build registry + ":$BUILD_ID"
         }
     }
-    
 }
