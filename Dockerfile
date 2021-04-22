@@ -4,7 +4,7 @@ ARG USER_ID=1000
 ARG GROUP_ID=1000
 
 RUN addgroup -g ${GROUP_ID} gradle \
- && adduser -g ${GROUP_ID} -s /bin/bash -h /home/gradle gradle
+ && adduser --gid ${GROUP_ID} -s /bin/bash -h /home/gradle gradle
 
 COPY --chown=glade:glade . /home/gradle/src
 WORKDIR /home/gradle/src
