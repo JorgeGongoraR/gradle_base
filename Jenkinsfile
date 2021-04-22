@@ -25,7 +25,7 @@
 // }
 environment{
     registry = "jorgegongora/dockergradle"
-    resistryCredential = ´dockerhub´
+    resistryCredential = 'dockerhub'
 }
 stages{
     stage('Clone repository'){
