@@ -57,15 +57,19 @@ pipeline{
         }
         stage('Build image'){
             steps{
-                echo '================= Building image ================='
-                dockerImage = docker.build registry + ":$BUILD_ID"
+                script{
+                    echo '================= Building image ================='
+                    dockerImage = docker.build registry + ":$BUILD_ID"
+                }
             }
         }
         stage('Deploy image'){
             steps{
-                echo '================= Deplying image ================='
-                docker.withRegistry('', resistryCredential) {
-                dockerImage.push()
+                script{
+                    echo '================= Deplying image ================='
+                    docker.withRegistry('', resistryCredential) {
+                        dockerImage.push()
+                    }
                 }
             }
         }
