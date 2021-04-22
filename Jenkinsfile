@@ -44,7 +44,7 @@
 pipeline{
     environment{
         registry = "jorgegongora/dockergradle"
-        resistryCredential = 'dockerhub'
+        resistryCredential = 'dokcerhub'
     }
     agent any
 
