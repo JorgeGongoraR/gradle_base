@@ -5,19 +5,19 @@ pipeline {
         registryCredential = 'dockerhub'
     }
      stages {
-        stage('Running untit'){
-            steps{
-                echo '===============Running untit==============='
-                sh 'chmod +x ./gradlew'
-                sh './gradlew clean test --no-daemon'
-            }
-        }
-        stage('Running app'){
-            steps{
-                echo "===============Running app==============="
-                sh './gradlew build'
-            }
-        }
+        // stage('Running untit'){
+        //     steps{
+        //         echo '===============Running untit==============='
+        //         sh 'chmod +x ./gradlew'
+        //         sh './gradlew clean test --no-daemon'
+        //     }
+        // }
+        // stage('Running app'){
+        //     steps{
+        //         echo "===============Running app==============="
+        //         sh './gradlew build'
+        //     }
+        // }
         stage('Building image') {
             steps{
                 script {
