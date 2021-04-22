@@ -1,6 +1,9 @@
 pipeline {
     agent any
-
+    environment {
+        registry = "jorgegongora/dockergradle"
+        registryCredential = 'dockerhub'
+    }
      stages {
         stage('Running untit'){
             steps{
@@ -15,14 +18,13 @@ pipeline {
                 sh './gradlew build'
             }
         }
+        stage('Building image') {
+            steps{
+                script {
+                    docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
     }
-}
-
-node {
-    checkout scm
-    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub'){
-        def customImage = docker.build("jorgegongora/dockerglade")
-
-        customImage.push()
-    }
+    
 }
