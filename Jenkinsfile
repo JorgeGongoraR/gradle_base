@@ -23,7 +23,7 @@ pipeline{
         stage('Deploy image'){
             steps{
                 script{
-                    echo '================= Deplying image ================='
+                    echo '================ Deploying image ================='
                     docker.withRegistry('', resistryCredential) {
                         dockerImage.push()
                     }
